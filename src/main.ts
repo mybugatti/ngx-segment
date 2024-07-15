@@ -1,4 +1,4 @@
-import { Component, importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom, OnInit } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
 import { SegmentModule } from 'ngx-segment-analytics';
@@ -14,19 +14,24 @@ import { SegmentService } from 'ngx-segment-analytics';
     </a>
   `,
 })
-export class App {
+export class App implements OnInit {
   name = 'Angular';
 
   constructor(private _segment: SegmentService) {
-    console.log('>>>')
+    console.log('Inital...');
   }
+
+  public ngOnInit() {
+    this._segment.track('load an hero')
+        .then(() => console.log("Event sended"));
+}
 }
 
 bootstrapApplication(App, {
   providers: [
     importProvidersFrom(
       SegmentModule.forRoot({
-        apiKey: 'dd',
+        apiKey: 'n7Hn4QrEyqHB9KwOn9t9iX',
         debug: false,
         loadOnInitialization: true,
       }),
