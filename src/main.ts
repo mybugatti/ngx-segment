@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
+import { SegmentModule } from 'ngx-segment-analytics';
+import { SegmentService } from 'ngx-segment-analytics';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,20 @@ import 'zone.js';
 })
 export class App {
   name = 'Angular';
+
+  constructor(private _segment: SegmentService) {
+    console.log('>>>')
+  }
 }
 
-bootstrapApplication(App);
+bootstrapApplication(App, {
+  providers: [
+    importProvidersFrom(
+      SegmentModule.forRoot({
+        apiKey: 'dd',
+        debug: false,
+        loadOnInitialization: true,
+      }),
+    ),
+  ]
+});
